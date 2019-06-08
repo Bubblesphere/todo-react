@@ -16,7 +16,7 @@ class Todo extends React.Component {
         {
           id: 2,
           description: "Do dishes",
-          done: false
+          done: true
         }
       ]
     }
@@ -49,6 +49,13 @@ class Todo extends React.Component {
     }));
   }
 
+  toggleTodo = (e) => {
+    const targetId = Number(e.target.dataset.id);
+    this.setState((state, props) => ({
+      todos: state.todos.map(x => x.id === targetId ? {...x, done: !x.done} : x)
+    }));
+  }
+
   render() {
     return <div>
       <input type="text" value={this.state.current} onChange={this.handleCurrent}/>
@@ -57,6 +64,7 @@ class Todo extends React.Component {
       {
         this.state.todos.map(t => 
           <li key={t.id}>
+            <input type="checkbox" data-id={t.id}  checked={t.done} onChange={this.toggleTodo}/> 
             {t.description}
             <button data-id={t.id} onClick={this.removeTodo}>X</button>
           </li>
