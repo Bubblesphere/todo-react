@@ -9,12 +9,12 @@ class Todo extends React.Component {
       current: "test",
       todos: [
         {
-          id: 1,
+          id: uuid(),
           description: "Do laundry",
           done: false
         },
         {
-          id: 2,
+          id: uuid(),
           description: "Do dishes",
           done: true
         }
@@ -23,7 +23,7 @@ class Todo extends React.Component {
   }
 
   removeTodo = (e) => {
-    const targetId = Number(e.target.dataset.id);
+    const targetId = e.target.dataset.id;
     const targetIndex = this.state.todos.findIndex(x => x.id === targetId);
     this.setState((state, props) => ({
       todos: [...state.todos.slice(0, targetIndex), ...state.todos.slice(targetIndex + 1)]
