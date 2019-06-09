@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css?family=Rubik:300");
+@import 'variables';
+
+body {
+  margin: 0;
+  font-family: 'Rubik', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $color-background-contrast default;
+  background-color: $color-background default;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+#root {
+  display: flex;
+  justify-content: center;
+}
+
+.app {
+  margin-top: 24px;
+}

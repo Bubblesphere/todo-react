@@ -1,0 +1,22 @@
+@import 'variables';
+
+.todo {
+  padding: $unit * 2 0;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.todo_description {
+  cursor: pointer;
+}
+
+.todo_delete {
+  
+}
+
+.todo_description--done {
+  text-decoration: line-through;
+  opacity: 0.4;
+}
