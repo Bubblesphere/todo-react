@@ -1,13 +1,10 @@
-@import url("https://fonts.googleapis.com/css?family=Rubik:300");
-@import 'variables';
+@import url("https://fonts.googleapis.com/css?family=Rubik:300");y
 
 body {
   margin: 0;
   font-family: 'Rubik', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: $color-background-contrast default;
-  background-color: $color-background default;
 }
 
 code {
@@ -18,8 +15,4 @@ code {
 #root {
   display: flex;
   justify-content: center;
-}
-
-.app {
-  margin-top: 24px;
 }

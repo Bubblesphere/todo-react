@@ -1,98 +1,65 @@
 import React from 'react';
-import './styles/TodoApp.scss';
-import uuid from 'uuid/v4';
-import Todo from './TodoItem';
-import Typography from '@material-ui/core/Typography';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 
 class TodoList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      newTodoDescription: "test",
-      todos: [
-        {
-          id: uuid(),
-          description: "Do laundry",
-          done: false
-        },
-        {
-          id: uuid(),
-          description: "Do dishes",
-          done: true
-        }
-      ]
+    this.styles = {
+      listStyleType: "none",
+      textAlign: "center",
+      minWidth: "500px",
+      paddingLeft: "0"
+    }
+    this.itemStyles = {
+      padding: "16px 0",
+      borderBottom: "1px solid #ddd",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
     }
   }
 
-  removeTodo = e => {
+  itemDescriptionStyles = done => {
+    const base = { cursor: "pointer" }
+    if (done) {
+      return {
+        ...base,
+        textDecoration: "line-through",
+        opacity: 0.4,
+      }
+    }
+    return base;
+  }
+
+  onRemove = e => {
     const targetId = e.currentTarget.value;
-    const targetIndex = this.state.todos.findIndex(x => x.id === targetId);
-    this.setState((state, props) => ({
-      todos: [...state.todos.slice(0, targetIndex), ...state.todos.slice(targetIndex + 1)]
-    }));
+    this.props.onRemove(targetId);
   }
 
-  addTodo = () => {
-    this.setState((state, props) => ({
-      newTodoDescription: "",
-      todos: [...state.todos, { 
-        id: uuid(), 
-        description: state.newTodoDescription, 
-        done: false
-      }]
-    }));
-  }
-
-  handleNewTodoDescription = e => {
-    const value = e.target.value;
-    this.setState((state, props) => ({
-      newTodoDescription: value
-    }));
-  }
-
-  toggleTodo = e => {
-    console.log(e.target);
+  onToggle = e => {
     const targetId = e.target.value;
-    this.setState((state, props) => ({
-      todos: state.todos.map(x => x.id === targetId ? {...x, done: !x.done} : x)
-    }));
+    this.props.onToggle(targetId);
   }
 
   render() {
-    return <div class="app">
-      <Typography variant="h3" component="h1" gutterBottom>
-        Todos
-      </Typography>
-
-      <div class="add-todo" >
-        <TextField
-          className={"add-todo_textfield"}
-          id="outlined-name"
-          label="Todo"
-          value={this.state.newTodoDescription}
-          onChange={this.handleNewTodoDescription}
-          margin="normal"
-        />
-        <Button 
-            onClick={this.addTodo}
-            color="primary"
-            variant="contained"
-          >
-          Add
-        </Button>
-      </div>
-
-
-      <ul id="todo-list">  
-        {
-          this.state.todos.map(todo => 
-            <Todo {...todo} toggle={this.toggleTodo} remove={this.removeTodo} />
-          )
-        }
-      </ul>
-    </div>
+    return <ul style={this.styles}>  
+      {
+        this.props.todos.map(todo => 
+          <li style={this.itemStyles} key={this.props.id}>
+            <FormControlLabel
+              control={
+                <Checkbox checked={todo.done} onChange={this.onToggle} value={todo.id} />
+              }
+              style={this.itemDescriptionStyles(todo.done)}
+              label={todo.description}
+              labelPlacement="end"/>
+            <Button size="small" value={todo.id} onClick={this.onRemove}>X</Button>
+          </li>
+        )
+      }
+    </ul>
   }
 }
 
